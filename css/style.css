@@ -1,0 +1,165 @@
+/* Reset de estilo para mantener consistencia en todos los navegadores */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Lora', serif;
+    color: #333;
+    background-color: #f9f9f9;
+    line-height: 1.6;
+    padding-top: 80px;
+    /* Para evitar que el header fijo tape el contenido */
+}
+
+/* Estilos del header */
+header {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    height: 80px;
+    background-color: #fff;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 20px;
+    z-index: 1000;
+}
+
+header nav {
+    flex: 1;
+}
+
+#nav-menu {
+    display: flex;
+    gap: 20px;
+}
+
+#nav-menu li {
+    list-style: none;
+}
+
+#nav-menu li a {
+    text-decoration: none;
+    font-size: 18px;
+    color: #333;
+    padding: 10px;
+    transition: color 0.3s ease;
+}
+
+#nav-menu li a:hover {
+    color: #555;
+}
+
+#logo {
+    flex: 1;
+    text-align: center;
+}
+
+#logo img {
+    max-height: 50px;
+    /* Ajustar el tamaño del logo */
+}
+
+#user-options a {
+    text-decoration: none;
+    font-size: 18px;
+    color: #333;
+    padding: 10px;
+    transition: color 0.3s ease;
+}
+
+#user-options a:hover {
+    color: #555;
+}
+
+/* Estilos del main (contenedor principal de las vistas) */
+main {
+    padding: 40px 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+/* Estilos generales para botones */
+button {
+    padding: 10px 20px;
+    border: none;
+    background-color: #333;
+    color: #fff;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+button:hover {
+    background-color: #555;
+}
+
+/* Tipografía y estilo general */
+h1,
+h2,
+h3 {
+    font-family: 'Merriweather', serif;
+    color: #222;
+}
+
+p {
+    margin: 10px 0;
+    font-size: 16px;
+    color: #666;
+}
+
+/* Estilos para formularios */
+input[type="text"],
+input[type="email"],
+input[type="password"] {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+input[type="submit"] {
+    background-color: #333;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+}
+
+input[type="submit"]:hover {
+    background-color: #555;
+}
+
+/* Estilos para el Footer */
+footer {
+    background-color: #333;
+    color: #fff;
+    text-align: center;
+    padding: 20px;
+}
+
+.footer {
+    color: #fff;
+}
+
+/* Estilos Responsive */
+@media (max-width: 768px) {
+    header {
+        flex-direction: column;
+        height: auto;
+        padding: 10px;
+    }
+
+    #nav-menu {
+        justify-content: center;
+    }
+
+    main {
+        padding: 20px;
+    }
+} 
