@@ -2,11 +2,12 @@ import { initShop, goBack } from './controllers/shop.controller.js';
 
 document.addEventListener('DOMContentLoaded', () => {
     const routes = {
-        '/home': '/pages/home.view.html',
-        '/shop': '/pages/shop.view.html',
-        '/about': '/pages/about.view.html',
-        '/contact': '/pages/contact.view.html',
-        '/login': '/pages/login.view.html',
+        '/home': '../js/views/home.view.html',
+        '/shop': '../js/views/shop.view.html',
+        '/about': '../js/views/about.view.html',
+        '/contact': '../js/views/contact.view.html',
+        '/login': '../js/views/login.view.html',
+        '/cart': '../js/views/cart.view.html',
     };
 
     function loadPage(route) {

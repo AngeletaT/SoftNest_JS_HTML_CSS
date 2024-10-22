@@ -4,22 +4,34 @@
     flex-wrap: wrap;
     margin: 20px;
     gap: 20px;
+    padding: 20px;
+    height: 100vh; /* Vista completa del alto de la ventana */
+    overflow: hidden; /* Evitar que el contenedor principal desborde */
 }
 
 #sidebar {
-    flex: 1 1 250px; /* Ocupa un mínimo de 250px pero se adapta en pantallas más grandes */
+    flex: 1 1 250px;
+    /* Ocupa un mínimo de 250px pero se adapta en pantallas más grandes */
     background-color: #f4f4f4;
     padding: 20px;
     border-radius: 8px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    height: 100%; /* Altura completa de la página */
+    position: sticky;
+    top: 0;
+    overflow-y: auto; /* Permitir scroll dentro del menú lateral */
 }
 
 #products-section {
-    flex: 3 1 600px; /* Ocupa el resto del espacio disponible */
+    flex: 3 1 600px;
+    /* Ocupa el resto del espacio disponible */
     background-color: #fff;
     padding: 20px;
     border-radius: 8px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    height: 100%; /* Altura completa de la página */
+    overflow-y: auto; /* Permitir scroll dentro del contenedor de productos */
+    position: relative; /* Mantener su posición en relación con el resto de la web */
 }
 
 /* Estilos del menú lateral */
@@ -47,43 +59,54 @@
     color: #fff;
 }
 
-/* Estilos de los productos */
+/* Estilos de las tarjetas de productos */
 .product-cards {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 16px;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px;
+    padding-bottom: 20px; /* Espacio inferior para evitar que el último producto quede pegado */
 }
 
 .product-card {
-    border: 1px solid #ccc;
+    background-color: #fff;
     border-radius: 8px;
-    padding: 16px;
-    width: 200px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
     display: flex;
     flex-direction: column;
-    align-items: center;
+    text-align: center;
+    padding: 15px;
+    height: auto;
+    justify-content: space-between; /* Asegura que el contenido y el botón Ver Más estén espaciados */
 }
 
 .product-image {
     width: 100%;
-    height: 0;
-    padding-bottom: 100%; /* This makes the div a square */
-    border-radius: 4px;
+    height: 200px;
     background-size: cover;
     background-position: center;
-    object-fit: cover;
+    border-radius: 8px 8px 0 0;
 }
 
 .product-info {
-    margin-top: 8px;
-    text-align: center;
+    flex-grow: 1;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.product-info p {
+    font-size: 16px;
+    font-weight: bold;
+    color: #333;
 }
 
 .view-more {
     display: inline-block;
-    margin-top: 8px;
-    color: #007BFF;
+    margin-top: auto;
+    padding: 8px 12px;
+    color: #ff0055;
     text-decoration: none;
 }
 
@@ -109,15 +132,18 @@
 /* Estilos responsive */
 @media (max-width: 768px) {
     .shop-container {
-        flex-direction: column;
+        flex-direction: column; /* Cambiar a disposición vertical en pantallas pequeñas */
+        height: auto;
     }
 
     #sidebar {
         width: 100%;
+        height: auto;
         margin-bottom: 20px;
     }
 
     #products-section {
         width: 100%;
+        height: auto;
     }
 }
