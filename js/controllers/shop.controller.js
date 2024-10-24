@@ -71,7 +71,8 @@ const handleFamilyClick = (family) => {
 
     renderFamiliesProducts(family);
     // Mostrar el botón para regresar
-    document.getElementById('back-button').style.display = 'block';
+    document.getElementById('back-button').style.display = 'flex';
+    document.getElementById('title').style.display = 'none';
 };
 
 // Función para renderizar las subfamilias
@@ -163,4 +164,6 @@ export const renderSubfamilyProducts = (products) => {
 export const goBack = () => {
     initShop();
     document.getElementById('back-button').style.display = 'none';
+    document.getElementById('title').style.display = 'block';
+
 };
