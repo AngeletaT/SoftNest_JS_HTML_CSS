@@ -33,7 +33,7 @@ export const renderAllProducts = (products) => {
                     <div class="product-image" style="background-image: url('${product.img_ppal_med}');"></div>
                     <div class="product-info">
                         <p>${product.descripcion}</p>
-                    <a href="" class="view-more" onclick="redirectToDetails('${product.refProducto}')">Ver más</a>
+                        <a href="${product.link}" class="view-more">Ver más</a>
                     </div>
                 </div>
             `;
@@ -112,7 +112,7 @@ export const renderFamiliesProducts = async (family) => {
                 <div class="product-image" style="background-image: url('${product.img_ppal_med}');"></div>
                 <div class="product-info">
                     <p>${product.descripcion}</p>
-                    <a href="" class="view-more" onclick="redirectToDetails('${product.refProducto}')">Ver más</a>
+                    <a href="${product.link}" class="view-more">Ver más</a>
                 </div>
             </div>
             `;
@@ -147,7 +147,7 @@ export const renderSubfamilyProducts = (products) => {
             <div class="product-image" style="background-image: url('${product.img_ppal_med}');"></div>
             <div class="product-info">
             <p>${product.descripcion}</p>
-                    <a href="" class="view-more" onclick="redirectToDetails('${product.refProducto}')">Ver más</a>
+            <a href="${product.link}" class="view-more">Ver más</a>
             </div>
             </div>
             `;
@@ -167,8 +167,3 @@ export const goBack = () => {
     document.getElementById('title').style.display = 'block';
 
 };
-
-// Función para manejar el clic en "Ver más" de un producto
-function redirectToDetails(referencia) {
-    window.location.href = `/details.html?referencia=${referencia}`;
-}
