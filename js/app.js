@@ -7,6 +7,7 @@ document.addEventListener('DOMContentLoaded', () => {
         '/about': '../js/views/about.view.html',
         '/contact': '../js/views/contact.view.html',
         '/login': '../js/views/login.view.html',
+        '/register': '../js/views/register.view.html',
         '/cart': '../js/views/cart.view.html',
     };
 
@@ -20,8 +21,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 contentDiv.innerHTML = html;
 
                 if (route === '/shop') {
-                    initShop(); // Iniciar la tienda
-                    document.getElementById('go-back').addEventListener('click', goBack); // Añadir manejador para el botón de regresar
+                    initShop();
+                    document.getElementById('go-back').addEventListener('click', goBack); 
                 }
             })
             .catch(error => console.error('Error al cargar la página:', error));
