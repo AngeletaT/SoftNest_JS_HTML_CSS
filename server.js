@@ -4,18 +4,28 @@ const path = require('path');
 const app = express();
 const PORT = 3006;
 
-// Middleware para servir archivos estáticos
+// Configurar la carpeta 'public' para servir archivos estáticos
 app.use(express.static(path.join(__dirname, 'public')));
 
-// Manejo de rutas básicas
+// Ruta principal para index.html
 app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, 'public/index.html'));
 });
 
-// Ruta para cada página como login, register, shop, details, etc.
-app.get('/:page', (req, res) => {
+// Ruta para archivos .html específicos (evita tratar archivos JS o CSS como HTML)
+app.get('/:page', (req, res, next) => {
     const page = req.params.page;
-    res.sendFile(path.join(__dirname, `public/${page}.html`));
+    const filePath = path.join(__dirname, `public/${page}.html`);
+    console.log('Serving:', filePath);
+    res.sendFile(filePath, (err) => {
+        if (err) next(); // Si el archivo no existe, pasa al siguiente middleware
+    });
+});
+
+// Manejar todas las demás rutas y servir index.html
+app.get('*', (req, res) => {
+    console.log('Ruta no encontrada:', req.url);
+    res.sendFile(path.join(__dirname, 'public/index.html'));
 });
 
 // Iniciar el servidor
