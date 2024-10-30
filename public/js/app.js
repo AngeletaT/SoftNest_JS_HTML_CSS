@@ -2,13 +2,13 @@ import { initShop, goBack } from './controllers/shop.controller.js';
 
 document.addEventListener('DOMContentLoaded', () => {
     const routes = {
-        '/home': '../views/home.view.html',
-        '/shop': '../views/shop.view.html',
-        '/about': '../views/about.view.html',
-        '/contact': '../views/contact.view.html',
-        '/login': '../views/login.view.html',
-        '/register': '../views/register.view.html',
-        '/cart': '../views/cart.view.html',
+        '/home': '../js/views/home.view.html',
+        '/shop': '../js/views/shop.view.html',
+        '/about': '../js/views/about.view.html',
+        '/contact': '../js/views/contact.view.html',
+        '/login': '../js/views/login.view.html',
+        '/register': '../js/views/register.view.html',
+        '/cart': '../js/views/cart.view.html',
     };
 
     function loadPage(route) {
@@ -22,7 +22,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
                 if (route === '/shop') {
                     initShop();
-                    document.getElementById('go-back').addEventListener('click', goBack);
+                    document.getElementById('go-back').addEventListener('click', goBack); 
                 }
             })
             .catch(error => console.error('Error al cargar la página:', error));
