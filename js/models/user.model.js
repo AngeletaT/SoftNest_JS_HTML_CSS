@@ -52,3 +52,12 @@ export const checkIfUserExists = async (username) => {
         console.error('Error:', error);
     }
 };
+
+export const getUserById = async (id) => {
+    try {
+        const response = await fetch(`${JSON_USER}/${id}`);
+        return await response.json();
+    } catch (error) {
+        console.error('Error:', error);
+    }
+};

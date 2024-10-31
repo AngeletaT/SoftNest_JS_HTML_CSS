@@ -74,6 +74,7 @@ export const loginController = {
 
                 const user = await loginUser(email, password);
                 if (user) {
+                    localStorage.setItem('user', JSON.stringify(user));
                     framework.showAlert('Inicio de sesión exitoso', this.successLogin);
                 } else {
                     framework.showAlert('Usuario o contraseña incorrectos');

@@ -13,9 +13,10 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     function loadPage(route) {
-        console.log('loadPage', route);
         const contentDiv = document.getElementById('content');
         const page = routes[route] || routes['/home'];
+
+        loadHeader();
 
         fetch(page)
             .then(response => response.text())
@@ -41,8 +42,6 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     window.addEventListener('popstate', (event) => {
-        console.log('popstate event');
-        console.log(window.location.pathname);
         loadPage(event.state?.path || window.location.pathname);
     });
 
@@ -56,7 +55,15 @@ document.addEventListener('DOMContentLoaded', () => {
     // Función para cargar eventos al cargar la página
     function bindEventsLoadPage() {
         document.querySelectorAll('a[data-route]').forEach(link => {
-            if (!link.hasEventListener) {
+            if (link.id === 'logout-link') {
+                link.addEventListener('click', (event) => {
+                    event.preventDefault();
+                    localStorage.removeItem('user');
+                    const route = link.getAttribute('data-route');
+                    window.history.pushState({ path: route }, '', route);
+                    loadPage(route);
+                });
+            } else if (!link.hasEventListener) {
                 link.addEventListener('click', (event) => {
                     event.preventDefault();
                     const route = link.getAttribute('data-route');
@@ -66,6 +73,28 @@ document.addEventListener('DOMContentLoaded', () => {
                 link.hasEventListener = true;
             }
         });
+    }
+
+    function loadHeader() {
+        const header = document.getElementById('user-options');
+        const user = JSON.parse(localStorage.getItem('user'));
+
+        if (user) {
+            header.innerHTML = `
+                <a href="#" data-route="/profile"><img src="${user.avatar}" alt="${user.username}" class="header-avatar"></img></a>
+                <a href="#" data-route="/cart">Carrito</a>
+                <a href="#" id="logout-link" data-route="/login">Cerrar sesión</a>
+            `;
+            
+            document.getElementById('logout-link').addEventListener('click', () => {
+                localStorage.removeItem('user');
+            });
+
+        } else {
+            header.innerHTML = `
+                <a href="#" data-route="/login">Iniciar sesión</a>
+            `;
+        }
     }
 });
 
