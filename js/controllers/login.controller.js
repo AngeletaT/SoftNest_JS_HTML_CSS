@@ -1,13 +1,12 @@
-import { registerUser, checkIfUserExists, checkIfEmailExists } from '../models/user.model.js';
+import { registerUser, loginUser, checkIfUserExists, checkIfEmailExists } from '../models/user.model.js';
+import { Framework } from '../app.js';
 
 export const registerController = {
-
     bindRegisterEvents: function () {
+        const framework = new Framework();
         const registerButton = document.getElementById('btnRegister');
         if (registerButton) {
             registerButton.addEventListener('click', async (event) => {
-
-
                 event.preventDefault();
 
                 const id = Math.floor(Math.random() * 1000);
@@ -19,27 +18,27 @@ export const registerController = {
 
                 // Validación de correo
                 if (!email.includes('@')) {
-                    alert('Por favor ingresa un correo válido con "@"');
+                    framework.showAlert('Por favor ingresa un correo válido con "@"');
                     return;
                 }
 
                 // Validación de contraseñas coincidentes
                 if (password !== confirmPassword) {
-                    alert('Las contraseñas no coinciden');
+                    framework.showAlert('Las contraseñas no coinciden');
                     return;
                 }
 
                 // Verificar si el usuario ya existe
                 const userExists = await checkIfUserExists(username);
                 if (userExists) {
-                    alert('El usuario ya está registrado');
+                    framework.showAlert('El usuario ya está registrado');
                     return;
                 }
 
                 // Verificar si el correo ya está registrado
                 const emailExists = await checkIfEmailExists(email);
                 if (emailExists) {
-                    alert('El correo ya está registrado');
+                    framework.showAlert('El correo ya está registrado');
                     return;
                 }
 
@@ -47,17 +46,24 @@ export const registerController = {
                 const newUser = { id, username, email, password, avatar, orders: [] };
                 const result = await registerUser(newUser);
                 if (result) {
-                    alert('Usuario registrado con éxito');
-                    window.location.href = '/index.html';
+                    framework.showAlert('Registro exitoso', this.successRegister);
+                } else {
+                    framework.showAlert('Datos incorrectos');
                 }
             });
         }
+    },
+
+    successRegister: function () {
+        const framework = new Framework();
+        window.location.href = '/index.html';
+        framework.hideAlert();
     }
 }
 
 export const loginController = {
-
     bindLoginEvents: function () {
+        const framework = new Framework();
         const loginButton = document.getElementById('btnLogin');
         if (loginButton) {
             loginButton.addEventListener('click', async (event) => {
@@ -68,10 +74,17 @@ export const loginController = {
 
                 const user = await loginUser(email, password);
                 if (user) {
-                    alert('Inicio de sesión exitoso');
-                    window.location.href = '/index.html';
+                    framework.showAlert('Inicio de sesión exitoso', this.successLogin);
+                } else {
+                    framework.showAlert('Usuario o contraseña incorrectos');
                 }
             });
         }
+    },
+
+    successLogin: function () {
+        const framework = new Framework();
+        window.location.href = '/index.html';
+        framework.hideAlert();
     }
-}
+};
