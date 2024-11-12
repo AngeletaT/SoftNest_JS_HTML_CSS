@@ -46,7 +46,7 @@ export const registerController = {
                 const newUser = { id, username, email, password, avatar, orders: [] };
                 const result = await registerUser(newUser);
                 if (result) {
-                    framework.showAlert('Registro exitoso', this.successRegister);
+                    window.location.href = '/index.html';
                 } else {
                     framework.showAlert('Datos incorrectos');
                 }
@@ -75,7 +75,7 @@ export const loginController = {
                 const user = await loginUser(email, password);
                 if (user) {
                     localStorage.setItem('user', JSON.stringify(user));
-                    framework.showAlert('Inicio de sesión exitoso', this.successLogin);
+                    window.location.href = '/index.html';
                 } else {
                     framework.showAlert('Usuario o contraseña incorrectos');
                 }
