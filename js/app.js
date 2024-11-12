@@ -1,6 +1,3 @@
-import { initShop, goBack } from './controllers/shop.controller.js';
-import { registerController, loginController } from './controllers/login.controller.js';
-
 export class Framework {
     constructor() {
         this.routes = {
@@ -47,7 +44,6 @@ export class Framework {
             link.addEventListener('click', (event) => {
                 event.preventDefault();
                 const route = link.getAttribute('data-route');
-                console.log("Navigating to route:", route);
                 window.history.pushState({ path: route }, '', route);
                 this.loadPage(route);
             });
@@ -55,7 +51,6 @@ export class Framework {
     }
 
     loadPage(route) {
-        console.log('Cargando ruta:', route);
         const contentDiv = document.getElementById('content');
 
         let page;
@@ -65,8 +60,6 @@ export class Framework {
             page = this.routes[route] || this.routes['/home'];
         }
 
-        console.log('Cargando página:', page);
-
         this.loadHeader();
 
         fetch(page)
@@ -75,23 +68,33 @@ export class Framework {
                 contentDiv.innerHTML = html;
 
                 if (route === '/shop') {
-                    initShop();
-                    document.getElementById('go-back').addEventListener('click', goBack);
+                    import('./controllers/shop.controller.js').then(module => {
+                        module.initShop();
+                    });
                 }
 
                 if (route === '/register') {
-                    registerController.bindRegisterEvents();
+                    import('./controllers/login.controller.js').then(module => {
+                        module.registerController();
+                    });
                 }
 
                 if (route === '/login') {
-                    loginController.bindLoginEvents();
+                    import('./controllers/login.controller.js').then(module => {
+                        module.loginController();
+                    });
                 }
 
                 if (route.startsWith('/details/')) {
                     const refProducto = route.split('/')[2];
-                    console.log('Ref. Producto:', refProducto);
                     import('./controllers/details.controller.js').then(module => {
                         module.initDetails(refProducto);
+                    });
+                }
+
+                if (route === '/cart') {
+                    import('./controllers/cart.controller.js').then(module => {
+                        module.initCart();
                     });
                 }
 
