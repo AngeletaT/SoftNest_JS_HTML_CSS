@@ -47,27 +47,21 @@
 
 .details-container .product-info h2#product-price {
     font-size: 1.5rem;
-    color: #ff0055;
+    color: #000000;
     margin: 0.5rem 0;
 }
 
-/* Selector de colores */
-.details-container .color-selector {
+/* Botones de color y talla */
+.details-container .color-selector,
+.details-container .size-options {
     display: flex;
     flex-direction: row;
     gap: 0.5rem;
     flex-wrap: wrap;
 }
 
-
-.details-container .color-selector h3 {
-    font-size: 0.9rem;
-    color: #444;
-    margin: 0.3rem 0;
-}
-
 .details-container .color-selector button,
-.details-container .size-options .size-option {
+.details-container .size-options button {
     padding: 0.5rem 1rem;
     border: 1px solid #ddd;
     border-radius: 5px;
@@ -75,39 +69,18 @@
     color: #444;
     cursor: pointer;
     transition: background-color 0.3s ease;
-}
-
-.details-container .color-selector button:hover,
-.details-container .size-options .size-option:hover {
-    background-color: #f0f0f0;
-    color: #333;
-}
-
-/* Opciones de tallas */
-.details-container .size-options {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.5rem;
-    justify-content: flex-start;
-}
-
-.details-container .size-options .size-option {
     flex: 1 1 auto;
-    height: 60px;
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 0.5rem;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    background-color: #f9f9f9;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
     font-size: 0.9rem;
+    max-width: fit-content;
 }
 
-.details-container .size-options .size-option:hover {
+.details-container .color-selector button:hover,
+.details-container .size-options button:hover {
     background-color: #f0f0f0;
+    color: #333;
 }
 
 .details-container .size-options p {
@@ -116,22 +89,15 @@
     margin: 0.3rem 0;
 }
 
-/* Cards de Tallas */
-.details-container .size-options .size-option {
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    background-color: #f9f9f9;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-}
-
-.details-container .size-options .size-option:hover {
-    background-color: #f0f0f0;
+.details-container .color-selector h3 {
+    font-size: 0.9rem;
+    color: #444;
+    margin: 0.3rem 0;
 }
 
 /* Estado seleccionado de color y talla */
 .details-container .color-selector button.selected,
-.details-container .size-options .size-option.selected {
+.details-container .size-options button.selected {
     background-color: #f9f9f9;
     color: #333;
     border: 1px solid #444;

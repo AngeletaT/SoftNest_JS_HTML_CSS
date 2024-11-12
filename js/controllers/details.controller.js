@@ -1,4 +1,5 @@
 import { getProductByReference } from '../models/article.model.js';
+import { Framework } from '../app.js';
 
 export const initDetails = async (refProducto) => {
     const productData = await getProductByReference(refProducto);
@@ -8,10 +9,16 @@ export const initDetails = async (refProducto) => {
     } else {
         document.getElementById('product-details').innerHTML = "<p>Producto no encontrado</p>";
     }
+
+    // Event listener para el botón de "Añadir al Carrito"
+    document.getElementById('add-to-cart').addEventListener('click', (event) => {
+        const barcode = event.target.dataset.barcode;
+        addToCart(barcode);
+    });
 };
 
 // Función para renderizar el encabezado del producto
-function renderProductHeader(product) {
+export const renderProductHeader = (product) => {
     document.getElementById('main-image').src = product.img_prod;
     document.getElementById('product-name').textContent = product.nom_prod;
     document.getElementById('product-title').textContent = product.titulo;
@@ -23,10 +30,10 @@ function renderProductHeader(product) {
     addToCartButton.disabled = true;
     addToCartButton.textContent = "Añadir al Carrito";
     document.querySelector('.product-info').appendChild(addToCartButton);
-}
+};
 
 // Función para renderizar los colores como opciones
-function renderColorOptions(articulos) {
+export const renderColorOptions = (articulos) => {
     const colorSelector = document.getElementById('color-selector');
     colorSelector.innerHTML = '';
 
@@ -51,23 +58,23 @@ function renderColorOptions(articulos) {
 
         colorSelector.appendChild(colorButton);
     }
-}
+};
 
 // Función para renderizar las opciones de talla dentro de un color específico
-function renderSizeOptions(sizes) {
+export const renderSizeOptions = (sizes) => {
     const sizeList = document.getElementById('size-options');
     sizeList.innerHTML = '';
 
     sizes.forEach(size => {
-        const sizeDiv = document.createElement('div');
-        sizeDiv.classList.add('size-option');
-        sizeDiv.textContent = `${size.destalla}`;
+        const sizeButton = document.createElement('button');
+        sizeButton.classList.add('size-option');
+        sizeButton.textContent = `${size.destalla}`;
 
-        sizeDiv.addEventListener('click', () => {
+        sizeButton.addEventListener('click', () => {
             document.querySelectorAll('.size-options .size-option').forEach(btn => btn.classList.remove('selected'));
-            sizeDiv.classList.add('selected');
+            sizeButton.classList.add('selected');
 
-            document.getElementById('product-price').textContent = `${size.pvp} €`;
+            document.getElementById('product-price').textContent = `${parseFloat(size.pvp).toFixed(2)} €`;
             document.getElementById('main-image').src = size.img_art;
 
             const addToCartButton = document.getElementById('add-to-cart');
@@ -76,6 +83,31 @@ function renderSizeOptions(sizes) {
             addToCartButton.textContent = size.stock > 0 ? "Añadir al Carrito" : "Agotado";
         });
 
-        sizeList.appendChild(sizeDiv);
+        sizeList.appendChild(sizeButton);
     });
-}
+};
+
+// Función para agregar el artículo al carrito en localStorage
+export const addToCart = (barcode) => {
+    const user = JSON.parse(localStorage.getItem('user'));
+    const framework = new Framework();
+    if (!user) {
+        framework.showAlert('Por favor, inicie sesión para agregar productos al carrito');
+        window.location.href = '/login';
+        return;
+    }
+
+    getArticleByBarcode(barcode).then(article => {
+        const cart = JSON.parse(localStorage.getItem('cart')) || [];
+        const existingItemIndex = cart.findIndex(item => item.barcode === barcode);
+
+        if (existingItemIndex > -1) {
+            cart[existingItemIndex].quantity += 1;
+        } else {
+            cart.push({ ...article, quantity: 1 });
+        }
+
+        localStorage.setItem('cart', JSON.stringify(cart));
+        framework.showAlert('Producto añadido al carrito');
+    });
+};
