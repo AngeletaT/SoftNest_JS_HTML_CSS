@@ -1,4 +1,4 @@
-import { getFamilies, getFamilyProducts, getSubfamilyProducts, getAllProducts } from '../models/product.model.js';
+import { getFamilies, getAllProductsJSON, getSubfamilyProducts, getAllProducts } from '../models/product.model.js';
 import { Framework } from '../app.js';
 
 // #region INICIAR SHOP
@@ -15,7 +15,7 @@ export const initShop = async () => {
         renderFamilies(families, handleFamilyClick);
         currentLevel = 'families';
 
-        const allProducts = await getAllProducts();
+        const allProducts = await getAllProductsJSON();
         // console.log(allProducts);
         renderAllProducts(allProducts);
     }
@@ -33,10 +33,10 @@ export const renderAllProducts = (products) => {
         products.forEach(product => {
             html += `
                 <div class="product-card">
-                    <div class="product-image" style="background-image: url('${product.img_ppal_med}');"></div>
+                    <div class="product-image" style="background-image: url('${product.img_prod}');"></div>
                     <div class="product-info">
-                        <p>${product.descripcion}</p>
-                        <a href="#" data-route="/details/${product.refProducto}" id="product-${product.refProducto}">Ver más</a>
+                        <p>${product.nom_prod}</p>
+                        <a href="#" data-route="/details/${product.referencia}" id="product-${product.referencia}">Ver más</a>
                     </div>
                 </div>
             `;

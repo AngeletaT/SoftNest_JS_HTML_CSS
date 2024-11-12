@@ -75,3 +75,16 @@ export const getAllProducts = async () => {
 };
 
 
+export const getAllProductsJSON = async () => {
+    try {
+        const response = await fetch(JSON_PRODUCTOS);
+        if (!response.ok) throw new Error('Error al obtener todos los productos desde JSON Server');
+        
+        const products = await response.json();
+        console.log("All Products from JSON Server:", products);
+        return products;
+    } catch (error) {
+        console.error('Error:', error);
+        return [];
+    }
+};
