@@ -8,7 +8,6 @@ export const initDetails = async (refProducto) => {
     } else {
         document.getElementById('product-details').innerHTML = "<p>Producto no encontrado</p>";
     }
-
 };
 
 // Función para renderizar el encabezado del producto
