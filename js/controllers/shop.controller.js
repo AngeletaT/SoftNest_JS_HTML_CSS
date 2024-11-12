@@ -1,4 +1,6 @@
 import { getFamilies, getFamilyProducts, getSubfamilyProducts, getAllProducts } from '../models/product.model.js';
+import { Framework } from '../app.js';
+
 // #region INICIAR SHOP
 // Variables para controlar el menú lateral.
 let currentLevel = 'families';
@@ -21,6 +23,7 @@ export const initShop = async () => {
 
 // Funcion para renderizar todos los productos
 export const renderAllProducts = (products) => {
+    const framework = new Framework();
     const contentDiv = document.getElementById('products');
     contentDiv.innerHTML = '';
     console.log("shopview", products);
@@ -33,17 +36,20 @@ export const renderAllProducts = (products) => {
                     <div class="product-image" style="background-image: url('${product.img_ppal_med}');"></div>
                     <div class="product-info">
                         <p>${product.descripcion}</p>
-                        <a href="${product.link}" class="view-more">Ver más</a>
+                        <a href="#" data-route="/details/${product.refProducto}" id="product-${product.refProducto}">Ver más</a>
                     </div>
                 </div>
             `;
         });
         html += '</div>';
         contentDiv.innerHTML = html;
+        framework.bindEventsLoadPage();
+
     } else {
         contentDiv.innerHTML = '<p>No se encontraron productos.</p>';
     }
 }
+
 
 // Función para renderizar las familias en el menú lateral
 export const renderFamilies = (families, onClickHandler) => {
@@ -95,6 +101,7 @@ export const renderSubfamilies = (subfamilias, onClickHandler, selectedSubfamily
 
 // Función para renderizar los productos de la familia
 export const renderFamiliesProducts = async (family) => {
+    const framework = new Framework();
     const contentDiv = document.getElementById('products');
     contentDiv.innerHTML = '';
 
@@ -112,13 +119,14 @@ export const renderFamiliesProducts = async (family) => {
                 <div class="product-image" style="background-image: url('${product.img_ppal_med}');"></div>
                 <div class="product-info">
                     <p>${product.descripcion}</p>
-                    <a href="${product.link}" class="view-more">Ver más</a>
+                        <a href="#" data-route="/details/${product.refProducto}" id="product-${product.refProducto}">Ver más</a>
                 </div>
             </div>
             `;
         });
         html += '</div>';
         contentDiv.innerHTML = html;
+        framework.bindEventsLoadPage();
     } else {
         contentDiv.innerHTML = '<p>No se encontraron productos para esta familia.</p>';
     }
@@ -137,8 +145,11 @@ const handleSubfamilyClick = async (refSubfamilia) => {
 
 // Función para renderizar los productos de una subfamilia
 export const renderSubfamilyProducts = (products) => {
+    const framework = new Framework();
+
     const contentDiv = document.getElementById('products');
     contentDiv.innerHTML = '';
+
     if (products.length > 0) {
         let html = '<h2>Productos  >  Familia  >  Subfamilia</h2><div class="product-cards">';
         products.forEach(product => {
@@ -147,13 +158,15 @@ export const renderSubfamilyProducts = (products) => {
             <div class="product-image" style="background-image: url('${product.img_ppal_med}');"></div>
             <div class="product-info">
             <p>${product.descripcion}</p>
-            <a href="${product.link}" class="view-more">Ver más</a>
+                        <a href="" data-route="/details/${product.refProducto}" id="product-${product.refProducto}">Ver más</a>
             </div>
             </div>
             `;
         });
         html += '</div>';
         contentDiv.innerHTML = html;
+
+        framework.bindEventsLoadPage();
     } else {
         contentDiv.innerHTML = '<p>No se encontraron productos para esta subfamilia.</p>';
     }
