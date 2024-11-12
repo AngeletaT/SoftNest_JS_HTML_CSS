@@ -1,4 +1,4 @@
-import { getProductByReference } from '../models/article.model.js';
+import { getProductByReference, getArticleByBarcode } from '../models/article.model.js';
 import { Framework } from '../app.js';
 
 export const initDetails = async (refProducto) => {
@@ -92,14 +92,15 @@ export const addToCart = (barcode) => {
     const user = JSON.parse(localStorage.getItem('user'));
     const framework = new Framework();
     if (!user) {
-        framework.showAlert('Por favor, inicie sesión para agregar productos al carrito');
-        window.location.href = '/login';
+        framework.showAlert('Por favor, inicie sesión para agregar productos al carrito', goToLogin);
         return;
     }
 
     getArticleByBarcode(barcode).then(article => {
         const cart = JSON.parse(localStorage.getItem('cart')) || [];
         const existingItemIndex = cart.findIndex(item => item.barcode === barcode);
+
+        console.log("article:", article);
 
         if (existingItemIndex > -1) {
             cart[existingItemIndex].quantity += 1;
@@ -111,3 +112,10 @@ export const addToCart = (barcode) => {
         framework.showAlert('Producto añadido al carrito');
     });
 };
+
+function goToLogin() {
+    const framework = new Framework();
+
+    framework.loadPage('/login');
+    framework.hideAlert();
+}

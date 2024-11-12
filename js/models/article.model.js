@@ -18,3 +18,35 @@ export const getProductByReference = async (refProducto) => {
         return null;
     }
 };
+
+export const getArticleByBarcode = async (barcode) => {
+    try {
+        const response = await fetch(JSON_PRODUCTOS);
+        if (!response.ok) throw new Error('Error al obtener los productos');
+        const products = await response.json();
+
+        for (const product of products) {
+            for (const color in product.articulos) {
+                const articles = product.articulos[color];
+                for (const article of articles) {
+                    if (article.barcode === barcode) {
+                        return {
+                            ...article,
+                            nom_prod: product.nom_prod,
+                            referencia: product.referencia,
+                            titulo: product.titulo,
+                            img_prod: product.img_prod
+                        };
+                    }
+                }
+            }
+        }
+
+        return null;
+    } catch (error) {
+        console.error('Error:', error);
+        return null;
+    }
+};
+
+
