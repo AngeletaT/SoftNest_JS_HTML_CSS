@@ -85,3 +85,25 @@ export const addOrder = async (userId, order) => {
         return null;
     }
 };
+
+
+export const updateUser = async (userId, updatedData) => {
+    try {
+        const response = await fetch(`${JSON_USER}/${userId}`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(updatedData)
+        });
+
+        if (!response.ok) {
+            throw new Error('Error al actualizar el usuario');
+        }
+
+        return await response.json();
+    } catch (error) {
+        console.error('Error:', error);
+        return null;
+    }
+};

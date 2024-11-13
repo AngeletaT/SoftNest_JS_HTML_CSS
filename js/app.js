@@ -9,6 +9,7 @@ export class Framework {
             '/register': '../js/views/register.view.html',
             '/details/': '../js/views/details.view.html',
             '/cart': '../js/views/cart.view.html',
+            '/profile': '../js/views/profile.view.html'
         };
     }
 
@@ -75,13 +76,13 @@ export class Framework {
 
                 if (route === '/register') {
                     import('./controllers/login.controller.js').then(module => {
-                        module.registerController();
+                        module.registerController.bindRegisterEvents();
                     });
                 }
 
                 if (route === '/login') {
                     import('./controllers/login.controller.js').then(module => {
-                        module.loginController();
+                        module.loginController.bindLoginEvents();
                     });
                 }
 
@@ -95,6 +96,12 @@ export class Framework {
                 if (route === '/cart') {
                     import('./controllers/cart.controller.js').then(module => {
                         module.initCart();
+                    });
+                }
+
+                if (route === '/profile') {
+                    import('./controllers/profile.controller.js').then(module => {
+                        module.initProfile();
                     });
                 }
 
@@ -116,6 +123,7 @@ export class Framework {
 
             document.getElementById('logout-link').addEventListener('click', () => {
                 localStorage.removeItem('user');
+                localStorage.removeItem('cart');
             });
 
         } else {
