@@ -1,4 +1,5 @@
 import { Framework } from '../app.js';
+import { addOrder } from '../models/user.model.js';
 
 export const initCart = () => {
     const cartItemsContainer = document.getElementById('cart-items');
@@ -66,6 +67,8 @@ export const initCart = () => {
         button.addEventListener('click', (event) => changeQuantity(event.target.dataset.barcode, -1));
     });
 
+    document.getElementById('checkout-button').addEventListener('click', checkout);
+
     checkoutButton.addEventListener('click', checkout);
 };
 
@@ -103,25 +106,39 @@ const removeFromCart = (barcode) => {
 };
 
 // Función para finalizar la compra
-const checkout = () => {
+const checkout = async () => {
     const framework = new Framework();
     const cart = JSON.parse(localStorage.getItem('cart')) || [];
     const user = JSON.parse(localStorage.getItem('user'));
-    fetch(JSON_PEDIDOS, {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ user, cart, date: new Date().toISOString() })
-    }).then(response => {
-        if (response.ok) {
-            framework.showAlert('Compra realizada con éxito', goToCart);
-            localStorage.removeItem('cart');
-            window.location.replace('/');
-        } else {
-            framework.showAlert('Error al procesar la compra');
-        }
-    }).catch(error => console.error('Error:', error));
+
+    if (!user) {
+        framework.showAlert('Por favor, inicie sesión para finalizar la compra', goToLogin);
+        return;
+    }
+
+    const order = {
+        cart,
+        date: new Date().toISOString(),
+        total: cart.reduce((acc, item) => acc + item.pvp * item.quantity, 0)
+    };
+
+    const updatedUser = await addOrder(user.id, order);
+
+    if (updatedUser) {
+        framework.showAlert('Compra realizada con éxito', goToCart);
+        localStorage.removeItem('cart');
+        window.location.replace('/');
+
+    } else {
+        framework.showAlert('Error al procesar la compra');
+    }
+
+    function goToLogin() {
+        const framework = new Framework();
+
+        framework.loadPage('/login');
+        framework.hideAlert();
+    }
 
     function goToCart() {
         const framework = new Framework();

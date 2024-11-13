@@ -61,3 +61,27 @@ export const getUserById = async (id) => {
         console.error('Error:', error);
     }
 };
+
+export const addOrder = async (userId, order) => {
+    try {
+        const response = await fetch(`${JSON_USER}/${userId}`);
+        if (!response.ok) throw new Error('Error al obtener el usuario');
+        const user = await response.json();
+
+        const updatedOrders = [...user.orders, order];
+
+        const updateResponse = await fetch(`${JSON_USER}/${userId}`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ ...user, orders: updatedOrders })
+        });
+
+        if (!updateResponse.ok) throw new Error('Error al actualizar los pedidos del usuario');
+        return await updateResponse.json();
+    } catch (error) {
+        console.error('Error:', error);
+        return null;
+    }
+};
