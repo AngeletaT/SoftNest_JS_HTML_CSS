@@ -1,10 +1,11 @@
+/* Contenedor principal */
 .profile-container {
     display: flex;
     gap: 2rem;
     margin: 2rem;
 }
 
-.profile-sidebar {
+.profile-container .profile-sidebar {
     width: 250px;
     display: flex;
     flex-direction: column;
@@ -12,19 +13,19 @@
     gap: 1rem;
 }
 
-.profile-image {
+.profile-container .profile-image {
     width: 150px;
     height: 150px;
     border-radius: 50%;
     object-fit: cover;
 }
 
-.profile-menu ul {
+.profile-container .profile-menu ul {
     list-style: none;
     padding: 0;
 }
 
-.profile-menu ul li a {
+.profile-container .profile-menu ul li a {
     display: block;
     padding: 0.8rem;
     text-align: center;
@@ -33,17 +34,17 @@
     cursor: pointer;
 }
 
-.profile-menu ul li a.active,
-.profile-menu ul li a:hover {
+.profile-container .profile-menu ul li a.active,
+.profile-container .profile-menu ul li a:hover {
     background-color: #333;
     color: #fff;
 }
 
-.profile-main {
+.profile-container .profile-main {
     flex: 1;
 }
 
-#logout-button {
+.profile-container #logout-button {
     margin-top: 1rem;
     background-color: #d94646;
     color: #fff;
@@ -53,7 +54,7 @@
 }
 
 /* Estilos para el contenedor principal del historial de pedidos */
-#orders-section {
+.profile-container #orders-section {
     display: flex;
     flex-direction: column;
     gap: 1.5rem;
@@ -63,7 +64,7 @@
 }
 
 /* Tarjeta de pedido */
-.order-card {
+.profile-container .order-card {
     background-color: #fff;
     padding: 1.5rem;
     border-radius: 8px;
@@ -72,20 +73,20 @@
     margin: 20px;
 }
 
-.order-card h3 {
+.profile-container .order-card h3 {
     font-size: 1.3rem;
     margin-bottom: 1rem;
     color: #333;
 }
 
-.order-items {
+.profile-container .order-items {
     display: flex;
     flex-direction: column;
     gap: 1rem;
     margin-top: 1rem;
 }
 
-.order-product {
+.profile-container .order-product {
     display: flex;
     gap: 1rem;
     padding: 1rem;
@@ -94,7 +95,7 @@
     align-items: center;
 }
 
-.product-image {
+.profile-container .product-image {
     width: 80px;
     height: 80px;
     object-fit: cover;
@@ -102,19 +103,19 @@
     border: 1px solid #ddd;
 }
 
-.product-details {
+.profile-container .product-details {
     display: flex;
     flex-direction: column;
     gap: 0.3rem;
 }
 
-.product-details p {
+.profile-container .product-details p {
     font-size: 0.9rem;
     color: #555;
     margin: 0;
 }
 
-.order-total {
+.profile-container .order-total {
     font-size: 1.1rem;
     font-weight: bold;
     color: #333;
@@ -122,6 +123,63 @@
     text-align: right;
 }
 
-.order-total strong {
+.profile-container .order-total strong {
     color: #ff0055;
+}
+
+/* Estilos responsive */
+@media (max-width: 768px) {
+    .profile-container {
+        flex-direction: column;
+    }
+
+    .profile-container .profile-sidebar {
+        width: 100%;
+    }
+
+    .profile-container .profile-main {
+        width: 100%;
+    }
+}
+
+@media (max-width: 480px) {
+    .profile-container {
+        margin: -1rem;
+    }
+
+    .profile-container .order-card {
+        padding: 1rem;
+        margin: 10px;
+    }
+
+    .profile-container .order-card h3 {
+        font-size: 1.1rem;
+    }
+
+    .profile-container .order-items {
+        gap: 0.5rem;
+    }
+
+    .profile-container .order-product {
+        flex-direction: column;
+        gap: 0.5rem;
+        padding: 0.5rem;
+    }
+
+    .profile-container .product-image {
+        width: 100%;
+        height: auto;
+        margin-bottom: 0.5rem;
+    }
+
+    .profile-container .product-details p {
+        font-size: 0.8rem;
+        color: #666;
+    }
+
+    .profile-container .order-total {
+        font-size: 1rem;
+        text-align: center;
+        margin-top: 1rem;
+    }
 }
