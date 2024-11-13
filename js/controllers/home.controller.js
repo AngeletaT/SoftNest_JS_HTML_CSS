@@ -39,7 +39,7 @@ const initCarousel = () => {
 let currentIndex = 0;
 
 const updateCarouselPosition = () => {
-    const totalSlides = window.carouselProducts.length;
+    const totalSlides = Math.ceil(window.carouselProducts.length / 2);
 
     if (currentIndex < 0) {
         currentIndex = totalSlides - 1;
@@ -47,19 +47,32 @@ const updateCarouselPosition = () => {
         currentIndex = 0;
     }
 
-    renderProductAtIndex(currentIndex);
+    renderProductAtIndex(currentIndex * 2);
 };
 
 const renderProductAtIndex = (index) => {
     const framework = new Framework();
     const carouselContent = document.getElementById('carousel-content');
-    const product = window.carouselProducts[index];
+    const products = window.carouselProducts;
+
+    if (index >= products.length) {
+        index = 0;
+    }
+
+    const product1 = products[index];
+    const product2 = products[index + 1] || products[0];
 
     carouselContent.innerHTML = `
-        <div class="carousel-product-card" style="background-image: url('${product.img_prod}');">
+        <div class="carousel-product-card" style="background-image: url('${product1.img_prod}');">
             <div class="carousel-text">
-                <h3>${product.nom_prod}</h3>
-                <a href="#" data-route="/details/${product.referencia}" class="view-more">Ver más</a>
+                <h5>${product1.nom_prod}</h5>
+                <a href="#" data-route="/details/${product1.referencia}" class="view-more">Ver más</a>
+            </div>
+        </div>
+        <div class="carousel-product-card" style="background-image: url('${product2.img_prod}');">
+            <div class="carousel-text">
+                <h5>${product2.nom_prod}</h5>
+                <a href="#" data-route="/details/${product2.referencia}" class="view-more">Ver más</a>
             </div>
         </div>
     `;
