@@ -107,3 +107,16 @@ export const updateUser = async (userId, updatedData) => {
         return null;
     }
 };
+
+export const getUserOrders = async (userId) => {
+    try {
+        const response = await fetch(`${JSON_USER}/${userId}`);
+        if (!response.ok) throw new Error('Error al obtener los pedidos del usuario');
+        const user = await response.json();
+        return user.orders || [];
+    } catch (error) {
+        console.error('Error:', error);
+        return [];
+    }
+};
+
