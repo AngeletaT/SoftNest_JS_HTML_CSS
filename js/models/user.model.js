@@ -1,7 +1,6 @@
 // #region REGISTER
 export const registerUser = async (user) => {
     try {
-        console.log("User", user);
         const response = await fetch(JSON_USER, {
             method: 'POST',
             headers: {

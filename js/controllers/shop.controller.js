@@ -1,32 +1,28 @@
 import { getFamilies, getAllProductsJSON, getSubfamilyProducts, getAllProducts } from '../models/product.model.js';
 import { Framework } from '../app.js';
 
-// #region INICIAR SHOP
-// Variables para controlar el menú lateral.
+// #region VARIABLES
 let currentLevel = 'families';
 let selectedFamily = null;
 let selectedSubfamily = null;
 
-// Cargar todos los productos inicialmente
+// #region INICIAR SHOP
 export const initShop = async () => {
     const families = await getFamilies();
-    // console.log(families);
     if (families) {
         renderFamilies(families, handleFamilyClick);
         currentLevel = 'families';
 
         const allProducts = await getAllProductsJSON();
-        // console.log(allProducts);
         renderAllProducts(allProducts);
     }
 };
 
-// Funcion para renderizar todos los productos
+// #region RENDERIZAR TODOS LOS PRODUCTOS
 export const renderAllProducts = (products) => {
     const framework = new Framework();
     const contentDiv = document.getElementById('products');
     contentDiv.innerHTML = '';
-    console.log("shopview", products);
 
     if (products.length > 0) {
         let html = '<h2>Productos</h2><div class="product-cards">';
@@ -50,8 +46,7 @@ export const renderAllProducts = (products) => {
     }
 }
 
-
-// Función para renderizar las familias en el menú lateral
+// #region RENDERIZAR FAMILIAS
 export const renderFamilies = (families, onClickHandler) => {
     const menuItems = document.getElementById('menu-items');
     if (!menuItems) {
@@ -69,19 +64,18 @@ export const renderFamilies = (families, onClickHandler) => {
 };
 
 // #region CLIC FAMILIA
-// Manejador para el clic en una familia
 const handleFamilyClick = (family) => {
     selectedFamily = family;
     renderSubfamilies(family.subfamilias, handleSubfamilyClick);
     currentLevel = 'subfamilies';
 
     renderFamiliesProducts(family);
-    // Mostrar el botón para regresar
+    
     document.getElementById('back-button').style.display = 'flex';
     document.getElementById('title').style.display = 'none';
 };
 
-// Función para renderizar las subfamilias
+// #region RENDERIZAR SUBFAMILIAS
 export const renderSubfamilies = (subfamilias, onClickHandler, selectedSubfamily = null) => {
     const menuItems = document.getElementById('menu-items');
     menuItems.innerHTML = '';
@@ -99,7 +93,7 @@ export const renderSubfamilies = (subfamilias, onClickHandler, selectedSubfamily
     });
 };
 
-// Función para renderizar los productos de la familia
+// #region RENDERIZAR PRODUCTOS DE FAMILIA
 export const renderFamiliesProducts = async (family) => {
     const framework = new Framework();
     const contentDiv = document.getElementById('products');
@@ -132,9 +126,7 @@ export const renderFamiliesProducts = async (family) => {
     }
 };
 
-
 // #region CLIC SUBFAMILIA
-// Manejador para el clic en una subfamilia
 const handleSubfamilyClick = async (refSubfamilia) => {
     selectedSubfamily = refSubfamilia;
     const products = await getSubfamilyProducts(refSubfamilia);
@@ -143,7 +135,7 @@ const handleSubfamilyClick = async (refSubfamilia) => {
     renderSubfamilies(selectedFamily.subfamilias, handleSubfamilyClick, selectedSubfamily);
 };
 
-// Función para renderizar los productos de una subfamilia
+// #region RENDER SUBFAMILIA PRODUCTS
 export const renderSubfamilyProducts = (products) => {
     const framework = new Framework();
 
@@ -155,11 +147,11 @@ export const renderSubfamilyProducts = (products) => {
         products.forEach(product => {
             html += `
             <div class="product-card">
-            <div class="product-image" style="background-image: url('${product.img_ppal_med}');"></div>
-            <div class="product-info">
-            <p>${product.descripcion}</p>
-                        <a href="" data-route="/details/${product.refProducto}" id="product-${product.refProducto}">Ver más</a>
-            </div>
+                <div class="product-image" style="background-image: url('${product.img_ppal_med}');"></div>
+                <div class="product-info">
+                    <p>${product.descripcion}</p>
+                    <a href="" data-route="/details/${product.refProducto}" id="product-${product.refProducto}">Ver más</a>
+                </div>
             </div>
             `;
         });
@@ -173,7 +165,6 @@ export const renderSubfamilyProducts = (products) => {
 };
 
 // #region BOTON VOLVER
-// Función para volver al nivel anterior (familias)
 export const goBack = () => {
     initShop();
     document.getElementById('back-button').style.display = 'none';

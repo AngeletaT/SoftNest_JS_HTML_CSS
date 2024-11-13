@@ -2,6 +2,7 @@ import { Framework } from '../app.js';
 import { updateUser } from '../models/user.model.js';
 import { getUserOrders } from '../models/user.model.js';
 
+// #region INICIAR PERFIL
 export const initProfile = () => {
     const framework = new Framework();
 
@@ -12,7 +13,6 @@ export const initProfile = () => {
         framework.loadPage('/login');
     }
 
-    // Eventos de navegación
     document.querySelectorAll('.profile-menu a').forEach(link => {
         link.addEventListener('click', (event) => {
             event.preventDefault();
@@ -27,6 +27,7 @@ export const initProfile = () => {
     showSection('profile');
 };
 
+// #region CARGAR DATOS PERFIL
 const loadProfileData = (user) => {
     document.getElementById('profile-picture').src = user.avatar;
     document.getElementById('profile-section').innerHTML = `
@@ -35,6 +36,7 @@ const loadProfileData = (user) => {
     `;
 };
 
+// #region MOSTRAR SECCIÓN
 const showSection = (section) => {
     document.querySelectorAll('.profile-section').forEach(div => div.style.display = 'none');
     document.getElementById(`${section}-section`).style.display = 'block';
@@ -43,6 +45,7 @@ const showSection = (section) => {
     if (section === 'settings') loadSettings();
 };
 
+// #region RENDERIZAR PEDIDOS USUARIO
 export const renderUserOrders = async () => {
     const user = JSON.parse(localStorage.getItem('user'));
 
@@ -50,7 +53,6 @@ export const renderUserOrders = async () => {
     ordersContainer.innerHTML = '<p>Cargando pedidos...</p>';
 
     const orders = await getUserOrders(user.id);
-    console.log('Orders:', orders);
 
     if (orders.length === 0) {
         ordersContainer.innerHTML = '<p>No tienes pedidos en tu historial.</p>';
@@ -90,6 +92,7 @@ export const renderUserOrders = async () => {
     });
 };
 
+// #region CARGAR AJUSTES
 const loadSettings = () => {
     const framework = new Framework();
     const user = JSON.parse(localStorage.getItem('user'));
@@ -118,6 +121,7 @@ const loadSettings = () => {
     });
 };
 
+// #region GUARDAR CAMBIOS PERFIL
 const saveProfileChanges = async () => {
     const framework = new Framework();
     const user = JSON.parse(localStorage.getItem('user'));
@@ -130,7 +134,6 @@ const saveProfileChanges = async () => {
         avatar: user.avatar,
         orders: user.orders
     };
-    console.log('Updated data:', updatedData);
 
     if (user) {
         const updatedUser = await updateUser(user.id, updatedData);

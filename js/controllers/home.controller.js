@@ -1,5 +1,7 @@
+import { Framework } from '../app.js';
 import { getRandomProducts, getRecentProducts } from '../models/product.model.js';
 
+// #region INICIA HOME
 export const initHome = async () => {
     await renderFeaturedCarousel();
     renderRecentProducts();
@@ -27,6 +29,7 @@ const renderFeaturedCarousel = async () => {
     initCarousel();
 };
 
+// #region CAROUSEL CONTROLS
 const initCarousel = () => {
     document.querySelector('.carousel-button.left').addEventListener('click', prevSlide);
     document.querySelector('.carousel-button.right').addEventListener('click', nextSlide);
@@ -48,6 +51,7 @@ const updateCarouselPosition = () => {
 };
 
 const renderProductAtIndex = (index) => {
+    const framework = new Framework();
     const carouselContent = document.getElementById('carousel-content');
     const product = window.carouselProducts[index];
 
@@ -59,6 +63,7 @@ const renderProductAtIndex = (index) => {
             </div>
         </div>
     `;
+    framework.bindEventsLoadPage();
 };
 
 const prevSlide = () => {
@@ -73,6 +78,7 @@ const nextSlide = () => {
 
 // #region RECENT PRODUCTS
 const renderRecentProducts = () => {
+    const framework = new Framework();
     const recentContainer = document.getElementById('recent-products');
     const recentProducts = getRecentProducts();
 
@@ -81,7 +87,6 @@ const renderRecentProducts = () => {
         return;
     }
 
-    // Inserta las cards de los productos recientes en el contenedor
     recentContainer.innerHTML = recentProducts.map(product => `
         <div class="product-card">
             <img src="${product.img_prod}" alt="${product.nom_prod}">
@@ -89,4 +94,6 @@ const renderRecentProducts = () => {
             <a href="#" data-route="/details/${product.referencia}" class="view-more">Ver más</a>
         </div>
     `).join('');
+
+    framework.bindEventsLoadPage();
 };

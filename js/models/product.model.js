@@ -3,7 +3,6 @@ export const getFamilies = async () => {
     const url = `${API_URL}?r=es/familias&cli=${CLIENT_ID}&apikey=${API_KEY}`;
     try {
         const response = await fetch(url);
-        // console.log("familias", response);
         if (!response.ok) throw new Error('Error al obtener las familias');
         return await response.json();
     } catch (error) {
@@ -62,7 +61,6 @@ export const getAllProducts = async () => {
 
             }
         }
-        console.log("allProducts", allProducts);
 
         return allProducts;
     } catch (error) {
@@ -78,7 +76,6 @@ export const getAllProductsJSON = async () => {
         if (!response.ok) throw new Error('Error al obtener todos los productos desde JSON Server');
 
         const products = await response.json();
-        console.log("All Products from JSON Server:", products);
         return products;
     } catch (error) {
         console.error('Error:', error);

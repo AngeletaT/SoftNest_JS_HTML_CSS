@@ -1,6 +1,7 @@
 import { Framework } from '../app.js';
 import { addOrder } from '../models/user.model.js';
 
+// #region INIT CART
 export const initCart = () => {
     const cartItemsContainer = document.getElementById('cart-items');
     const cartTotalElement = document.getElementById('cart-total');
@@ -49,7 +50,7 @@ export const initCart = () => {
 
     cartTotalElement.textContent = `${total.toFixed(2)} €`;
 
-    // Eventos para los botones de eliminar y cambiar cantidades
+    // #region EVENT LISTENERS
     document.querySelectorAll('.remove-button').forEach(button => {
         button.addEventListener('click', (event) => removeFromCart(event.target.dataset.barcode));
     });
@@ -58,7 +59,6 @@ export const initCart = () => {
         input.addEventListener('change', (event) => updateQuantity(event.target.dataset.barcode, event.target.value));
     });
 
-    // Eventos para los botones de incremento y decremento
     document.querySelectorAll('.increase-button').forEach(button => {
         button.addEventListener('click', (event) => changeQuantity(event.target.dataset.barcode, 1));
     });
@@ -72,32 +72,32 @@ export const initCart = () => {
     checkoutButton.addEventListener('click', checkout);
 };
 
-// Función para cambiar la cantidad con los botones + y -
+// #region CART QUANTITY
 const changeQuantity = (barcode, change) => {
     const cart = JSON.parse(localStorage.getItem('cart')) || [];
     const productIndex = cart.findIndex(item => item.barcode === barcode);
 
     if (productIndex > -1) {
-        cart[productIndex].quantity = Math.max(1, cart[productIndex].quantity + change); // Asegura que la cantidad mínima es 1
+        cart[productIndex].quantity = Math.max(1, cart[productIndex].quantity + change);
         localStorage.setItem('cart', JSON.stringify(cart));
-        initCart(); // Recarga el carrito para reflejar los cambios
+        initCart();
     }
 };
 
-// Función para actualizar la cantidad y el precio total de un producto
+// #region UPDATE QUANTITY
 const updateQuantity = (barcode, quantity) => {
     const cart = JSON.parse(localStorage.getItem('cart')) || [];
     const productIndex = cart.findIndex(item => item.barcode === barcode);
-    const parsedQuantity = Math.max(1, parseInt(quantity, 10) || 1); // Convierte a número y asegura que la cantidad es al menos 1
+    const parsedQuantity = Math.max(1, parseInt(quantity, 10) || 1);
 
     if (productIndex > -1 && parsedQuantity > 0) {
         cart[productIndex].quantity = parsedQuantity;
         localStorage.setItem('cart', JSON.stringify(cart));
-        initCart(); // Recarga el carrito para reflejar los cambios
+        initCart();
     }
 };
 
-// Función para eliminar un producto del carrito
+// #region REMOVE FROM CART
 const removeFromCart = (barcode) => {
     let cart = JSON.parse(localStorage.getItem('cart')) || [];
     cart = cart.filter(item => item.barcode !== barcode);
@@ -105,7 +105,7 @@ const removeFromCart = (barcode) => {
     initCart();
 };
 
-// Función para finalizar la compra
+// #region CHECKOUT
 const checkout = async () => {
     const framework = new Framework();
     const cart = JSON.parse(localStorage.getItem('cart')) || [];

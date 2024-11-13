@@ -1,6 +1,7 @@
 import { registerUser, loginUser, checkIfUserExists, checkIfEmailExists } from '../models/user.model.js';
 import { Framework } from '../app.js';
 
+// #region REGISTER
 export const registerController = {
     bindRegisterEvents: function () {
         const framework = new Framework();
@@ -16,33 +17,28 @@ export const registerController = {
                 const confirmPassword = document.getElementById('register-confirm-password').value;
                 const avatar = `https://i.pravatar.cc/150?u=${id}`;
 
-                // Validación de correo
                 if (!email.includes('@')) {
                     framework.showAlert('Por favor ingresa un correo válido con "@"');
                     return;
                 }
 
-                // Validación de contraseñas coincidentes
                 if (password !== confirmPassword) {
                     framework.showAlert('Las contraseñas no coinciden');
                     return;
                 }
 
-                // Verificar si el usuario ya existe
                 const userExists = await checkIfUserExists(username);
                 if (userExists) {
                     framework.showAlert('El usuario ya está registrado');
                     return;
                 }
 
-                // Verificar si el correo ya está registrado
                 const emailExists = await checkIfEmailExists(email);
                 if (emailExists) {
                     framework.showAlert('El correo ya está registrado');
                     return;
                 }
 
-                // Si las validaciones son correctas, se registra el usuario
                 const newUser = { id, username, email, password, avatar, orders: [] };
                 const result = await registerUser(newUser);
                 if (result) {
@@ -61,6 +57,7 @@ export const registerController = {
     }
 }
 
+// #region LOGIN
 export const loginController = {
     bindLoginEvents: function () {
         const framework = new Framework();
