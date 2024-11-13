@@ -1,6 +1,4 @@
-const JSON_USER = 'http://localhost:3005/usuarios';
-
-// Función para registrar un nuevo usuario
+// #region REGISTER
 export const registerUser = async (user) => {
     try {
         console.log("User", user);
@@ -18,7 +16,7 @@ export const registerUser = async (user) => {
     }
 };
 
-// Función para verificar credenciales de inicio de sesión
+// #region LOGIN
 export const loginUser = async (email, password) => {
     try {
         const response = await fetch(`${JSON_USER}?email=${email}&password=${password}`);
@@ -33,6 +31,7 @@ export const loginUser = async (email, password) => {
     }
 };
 
+// #region VALIDATES
 export const checkIfEmailExists = async (email) => {
     try {
         const response = await fetch(`${JSON_USER}?email=${email}`);
@@ -53,6 +52,7 @@ export const checkIfUserExists = async (username) => {
     }
 };
 
+// #region GET USER
 export const getUserById = async (id) => {
     try {
         const response = await fetch(`${JSON_USER}/${id}`);
@@ -62,6 +62,19 @@ export const getUserById = async (id) => {
     }
 };
 
+export const getUserOrders = async (userId) => {
+    try {
+        const response = await fetch(`${JSON_USER}/${userId}`);
+        if (!response.ok) throw new Error('Error al obtener los pedidos del usuario');
+        const user = await response.json();
+        return user.orders || [];
+    } catch (error) {
+        console.error('Error:', error);
+        return [];
+    }
+};
+
+// #region ADD ORDER
 export const addOrder = async (userId, order) => {
     try {
         const response = await fetch(`${JSON_USER}/${userId}`);
@@ -86,7 +99,7 @@ export const addOrder = async (userId, order) => {
     }
 };
 
-
+// #region UPDATE USER
 export const updateUser = async (userId, updatedData) => {
     try {
         const response = await fetch(`${JSON_USER}/${userId}`, {
@@ -107,16 +120,3 @@ export const updateUser = async (userId, updatedData) => {
         return null;
     }
 };
-
-export const getUserOrders = async (userId) => {
-    try {
-        const response = await fetch(`${JSON_USER}/${userId}`);
-        if (!response.ok) throw new Error('Error al obtener los pedidos del usuario');
-        const user = await response.json();
-        return user.orders || [];
-    } catch (error) {
-        console.error('Error:', error);
-        return [];
-    }
-};
-

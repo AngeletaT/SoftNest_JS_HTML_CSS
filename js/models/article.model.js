@@ -1,4 +1,4 @@
-// Función para obtener un producto específico por su referencia
+// #region GET PRODUCT BY REFERENCE
 export const getProductByReference = async (refProducto) => {
     console.log("refProducto:", refProducto);
     const url = `${JSON_PRODUCTOS}?referencia=${refProducto}`;
@@ -19,6 +19,7 @@ export const getProductByReference = async (refProducto) => {
     }
 };
 
+// #region GET ARTICLE BY BARCODE
 export const getArticleByBarcode = async (barcode) => {
     try {
         const response = await fetch(JSON_PRODUCTOS);

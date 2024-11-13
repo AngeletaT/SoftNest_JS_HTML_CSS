@@ -1,4 +1,4 @@
-// Función para obtener las familias desde la API
+// #region GET FAMILIES
 export const getFamilies = async () => {
     const url = `${API_URL}?r=es/familias&cli=${CLIENT_ID}&apikey=${API_KEY}`;
     try {
@@ -12,26 +12,25 @@ export const getFamilies = async () => {
     }
 };
 
-// Función para obtener los productos de todas las subfamilias de una familia
+// #region GET FAMILY PRODUCTS
 export const getFamilyProducts = async (family) => {
     const famProducts = [];
     const subfamilias = family.subfamilias;
 
-    // Iterar sobre cada subfamilia y obtener los productos
     for (const subfamily of subfamilias) {
         const products = await getSubfamilyProducts(subfamily.refsubfamilia);
-        famProducts.push(...products); // Añadir los productos obtenidos al array total
+        famProducts.push(...products);
     }
 
-    return famProducts; // Devolver todos los productos de la familia
+    return famProducts;
 };
 
-// Función para obtener productos de una subfamilia
+// #region GET SUBFAMILY PRODUCTS
 export const getSubfamilyProducts = async (refSubfamilia) => {
     const url = `${API_URL}?r=es/productosEnSubfamilia/${refSubfamilia}&cli=${CLIENT_ID}&apikey=${API_KEY}`;
     try {
         const response = await fetch(url);
-        // console.log("productos", response);
+
         if (!response.ok) throw new Error('Error al obtener los productos');
         return await response.json();
     } catch (error) {
@@ -40,6 +39,7 @@ export const getSubfamilyProducts = async (refSubfamilia) => {
     }
 };
 
+// #region GET ALL PRODUCTS API
 export const getAllProducts = async () => {
     const url = `${API_URL}?r=es/familias&cli=${CLIENT_ID}&apikey=${API_KEY}`;
 
@@ -52,12 +52,9 @@ export const getAllProducts = async () => {
 
         let allProducts = [];
 
-        // Iterar sobre cada familia para obtener sus subfamilias y productos
         for (const key in families) {
             const family = families[key];
-            // console.log("family", family);
             if (family.subfamilias && family.subfamilias.length > 0) {
-                // console.log("family.subfamilias", family.subfamilias);
                 for (const subfamily of family.subfamilias) {
                     const products = await getSubfamilyProducts(subfamily.refsubfamilia);
                     allProducts = allProducts.concat(products);
@@ -67,14 +64,14 @@ export const getAllProducts = async () => {
         }
         console.log("allProducts", allProducts);
 
-        return allProducts; // Devolver todos los productos de todas las familias
+        return allProducts;
     } catch (error) {
         console.error('Error:', error);
         return [];
     }
 };
 
-
+// #region GET ALL PRODUCTS JSON
 export const getAllProductsJSON = async () => {
     try {
         const response = await fetch(JSON_PRODUCTOS);
@@ -89,16 +86,15 @@ export const getAllProductsJSON = async () => {
     }
 };
 
-// Función para obtener productos aleatorios
+// #region GET RANDOM PRODUCTS
 export const getRandomProducts = async (count) => {
     try {
         const response = await fetch(JSON_PRODUCTOS);
         if (!response.ok) throw new Error('Error en la respuesta de la API');
-        
-        const products = await response.json();
 
-        // Seleccionar productos aleatorios
+        const products = await response.json();
         const randomProducts = [];
+
         while (randomProducts.length < count && products.length > 0) {
             const randomIndex = Math.floor(Math.random() * products.length);
             randomProducts.push(products.splice(randomIndex, 1)[0]);
@@ -111,7 +107,7 @@ export const getRandomProducts = async (count) => {
     }
 };
 
-// Función para obtener productos recientes desde el localStorage
+// #region GET RECENT PRODUCTS
 export const getRecentProducts = () => {
     try {
         return JSON.parse(localStorage.getItem('recentlyViewed')) || [];
