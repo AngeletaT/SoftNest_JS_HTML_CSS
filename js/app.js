@@ -1,4 +1,5 @@
 export class Framework {
+    // #region VARIABLES
     constructor() {
         this.routes = {
             '/home': '../js/views/home.view.html',
@@ -13,6 +14,7 @@ export class Framework {
         };
     }
 
+    // #region MODAL PERSONALIZADO
     showAlert(message, callback) {
         const callbackFunction = callback;
         const alertBox = document.getElementById('custom-alert');
@@ -40,6 +42,7 @@ export class Framework {
         alertBox.classList.add('hidden');
     }
 
+    // #region CARGA DE PÁGINAS
     bindEventsLoadPage() {
         document.querySelectorAll('a[data-route]').forEach(link => {
             link.addEventListener('click', (event) => {
@@ -116,6 +119,7 @@ export class Framework {
             .catch(error => console.error('Error al cargar la página:', error));
     }
 
+    // #region HEADER
     loadHeader() {
         const header = document.getElementById('user-options');
         const user = JSON.parse(localStorage.getItem('user'));
@@ -140,6 +144,7 @@ export class Framework {
     }
 }
 
+// #region INICIALIZACIÓN
 document.addEventListener('DOMContentLoaded', () => {
     const framework = new Framework();
 
