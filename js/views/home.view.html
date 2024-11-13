@@ -1,3 +1,25 @@
-<h1>Bienvenido al Catálogo Textil</h1>
-<p>Descubre nuestras colecciones de productos textiles para el hogar.</p>
-<button>Ver Colección</button>
+<section id="home">
+    <!-- Contenedor del Carrusel de Productos -->
+    <div class="carousel-fullscreen" id="featured-carousel">
+        <button class="carousel-button left" onclick="prevSlide()">❮</button>
+        <div class="carousel-content" id="carousel-content">
+            <!-- Las cards del producto se insertarán aquí dinámicamente -->
+        </div>
+        <button class="carousel-button right" onclick="nextSlide()">❯</button>
+    </div>
+
+    <!-- Información sobre la Empresa -->
+    <div class="about-us">
+        <h2>Sobre Nosotros</h2>
+        <p>En Softnest nos dedicamos a ofrecer productos textiles de la mejor calidad para tu hogar. Nuestros productos son fabricados con los mejores materiales y con los más altos estándares de calidad. 
+            ¡Descubre nuestra colección y dale un toque especial a tu hogar! </p>
+    </div>
+
+    <!-- Sección de Recientes -->
+    <div class="recent-products">
+        <h2>Visto Recientemente</h2>
+        <div class="recent-cards" id="recent-products">
+            <!-- Las cards de productos recientes se insertarán aquí -->
+        </div>
+    </div>
+</section>

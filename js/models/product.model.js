@@ -79,7 +79,7 @@ export const getAllProductsJSON = async () => {
     try {
         const response = await fetch(JSON_PRODUCTOS);
         if (!response.ok) throw new Error('Error al obtener todos los productos desde JSON Server');
-        
+
         const products = await response.json();
         console.log("All Products from JSON Server:", products);
         return products;
@@ -88,3 +88,36 @@ export const getAllProductsJSON = async () => {
         return [];
     }
 };
+
+// Función para obtener productos aleatorios
+export const getRandomProducts = async (count) => {
+    try {
+        const response = await fetch(JSON_PRODUCTOS);
+        if (!response.ok) throw new Error('Error en la respuesta de la API');
+        
+        const products = await response.json();
+
+        // Seleccionar productos aleatorios
+        const randomProducts = [];
+        while (randomProducts.length < count && products.length > 0) {
+            const randomIndex = Math.floor(Math.random() * products.length);
+            randomProducts.push(products.splice(randomIndex, 1)[0]);
+        }
+
+        return randomProducts;
+    } catch (error) {
+        console.error('Error obteniendo productos aleatorios:', error);
+        return [];
+    }
+};
+
+// Función para obtener productos recientes desde el localStorage
+export const getRecentProducts = () => {
+    try {
+        return JSON.parse(localStorage.getItem('recentlyViewed')) || [];
+    } catch (error) {
+        console.error('Error obteniendo productos recientes:', error);
+        return [];
+    }
+};
+

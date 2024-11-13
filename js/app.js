@@ -68,6 +68,12 @@ export class Framework {
             .then(html => {
                 contentDiv.innerHTML = html;
 
+                if (route === '/home') {
+                    import('./controllers/home.controller.js').then(module => {
+                        module.initHome();
+                    });
+                }
+
                 if (route === '/shop') {
                     import('./controllers/shop.controller.js').then(module => {
                         module.initShop();

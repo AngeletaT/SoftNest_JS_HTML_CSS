@@ -2,10 +2,18 @@ import { getProductByReference, getArticleByBarcode } from '../models/article.mo
 import { Framework } from '../app.js';
 
 export const initDetails = async (refProducto) => {
+
     const productData = await getProductByReference(refProducto);
+    console.log("productData", productData);
+
     if (productData) {
         renderProductHeader(productData);
         renderColorOptions(productData.articulos);
+        addToRecentlyViewed({
+            referencia: productData.referencia,
+            nom_prod: productData.nom_prod,
+            img_prod: productData.img_prod
+        });
     } else {
         document.getElementById('product-details').innerHTML = "<p>Producto no encontrado</p>";
     }
@@ -119,3 +127,19 @@ function goToLogin() {
     framework.loadPage('/login');
     framework.hideAlert();
 }
+
+const addToRecentlyViewed = (product) => {
+    console.log("product", product);
+    const recentlyViewed = JSON.parse(localStorage.getItem('recentlyViewed')) || [];
+
+    const exists = recentlyViewed.some(item => item.referencia === product.referencia);
+    if (!exists) {
+        recentlyViewed.unshift(product);
+
+        if (recentlyViewed.length > 6) {
+            recentlyViewed.pop();
+        }
+
+        localStorage.setItem('recentlyViewed', JSON.stringify(recentlyViewed));
+    }
+};
