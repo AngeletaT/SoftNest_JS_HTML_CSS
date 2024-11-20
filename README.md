@@ -25,7 +25,7 @@ Haz clic en los productos para explorar más detalles sobre ellos.
 - Leer sobre Softnest en la sección "Sobre Nosotros".
 - Acceder a productos recientemente vistos con enlaces rápidos a sus detalles.
 
-![Softnest Inicio](./assets/img-readme/home.png)
+![Softnest Inicio](./assets/img_readme/home.png)
 
 ### Tienda
 En la sección de **Tienda** podrás navegar por el catálogo completo de productos, organizado en **familias** y **subfamilias**.  
@@ -36,7 +36,7 @@ Usa el menú lateral para filtrar productos por categorías y subcategorías y e
 - Ver todos los productos disponibles en el catálogo.
 - Acceder a los detalles de cada producto desde su tarjeta.
 
-![Softnest Tienda](./assets/img-readme/shop.png)
+![Softnest Tienda](./assets/img_readme/shop.png)
 
 ### Detalles de Producto
 La página de **Detalles** proporciona una vista detallada de cada producto. Aquí puedes:
@@ -49,7 +49,7 @@ La página de **Detalles** proporciona una vista detallada de cada producto. Aqu
 - Seleccionar variaciones de color y talla.
 - Añadir productos al carrito.
 
-![Softnest Detalles de Producto](./assets/img-readme/details.png)
+![Softnest Detalles de Producto](./assets/img_readme/details.png)
 
 ### Carrito de Compras
 En el **Carrito de Compras** puedes revisar los artículos seleccionados, actualizar cantidades y proceder al pago.  
@@ -61,7 +61,7 @@ Al hacer clic en "Finalizar Compra", los datos de la compra se guardan y puedes 
 - Eliminar artículos del carrito.
 - Finalizar la compra y guardar el pedido en el historial.
 
-![Softnest Carrito](./assets/img-readme/carrito.png)
+![Softnest Carrito](./assets/img_readme/carrito.png)
 
 ### Perfil de Usuario
 La página de **Perfil** permite al usuario gestionar su cuenta y ver su historial de compras. Incluye:
@@ -74,20 +74,20 @@ La página de **Perfil** permite al usuario gestionar su cuenta y ver su histori
 - Ver el historial de pedidos completos con sus detalles.
 - Gestionar la cuenta de usuario.
 
-![Softnest Perfil](./assets/img-readme/perfil.png)
+![Softnest Perfil](./assets/img_readme/perfil.png)
 
 #### Historial de Pedidos
 Aquí puedes visualizar los pedidos realizados, incluyendo los **productos comprados**, la **fecha de compra**, y el **total** del pedido.
 
-![Softnest Historial](./assets/img-readme/historial.png)
+![Softnest Historial](./assets/img_readme/historial.png)
 
 #### Ajustes de Usuario
 Permite cambiar tu nombre de usuario y actualizar la información de cuenta en general.
 
-![Softnest Ajustes](./assets/img-readme/ajustes.png)
+![Softnest Ajustes](./assets/img_readme/ajustes.png)
 
 ### Contacto
 La sección de **Contacto** proporciona un formulario de contacto donde los usuarios pueden enviar consultas o comentarios a Softnest.  
 Es un formulario simple y fácil de usar, diseñado para una rápida comunicación con el equipo de atención al cliente.
 
-![Softnest Contacto](./assets/img-readme/contacto.png)
+![Softnest Contacto](./assets/img_readme/contact.png)
